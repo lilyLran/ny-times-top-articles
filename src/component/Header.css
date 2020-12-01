@@ -1,0 +1,10 @@
+.sign-in-button{
+    border-width: 0;
+    color: #007bff;
+}
+.user-text {
+    max-width: 140px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

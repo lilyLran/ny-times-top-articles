@@ -1,0 +1,11 @@
+.recent-search-content {
+    min-width: 240px;
+}
+
+.recent-search-button {
+    border-color: white;
+    background-color: white;
+    color: #007bff;
+    font-weight: 600;
+    margin: 0.5rem 1rem;
+}
