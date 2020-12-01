@@ -1,11 +1,11 @@
 import React, {useEffect, useRef} from 'react'
-import { Pagination, Alert} from 'react-bootstrap';
+import { Pagination, Spinner} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from "react-router-dom"
 import getPageInfo from '../util/pagination'
 import format from '../util/format'
 import {search} from '../actions/newsActions'
-import Spinner from './Spinner'
+// import Spinner from './Spinner'
 import useQuery from '../hooks/useQuery'
 import './Search.css'
 
@@ -22,10 +22,16 @@ export default function Search() {
     const {loading, error, list} =  result?.[currentPage] || {}
 
     if (error) {
-        return (<Alert variant='warning' className='center-vertical'>{error.message}</Alert>)
+        return (<div className='center-vertical'>{error.message}</div>)
     }
 
-    if (loading) return <Spinner />
+    if (loading) return (
+        <div className='center-vertical'>
+            <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+            </Spinner>
+        </div>
+    )
 
     const onSearchPage = (page) => {
         dispatch(search('test', page, searchState))

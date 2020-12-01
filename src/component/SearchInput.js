@@ -22,7 +22,7 @@ export default function SearchInput() {
         const searchText = text || query
         if (!searchText) return;
         dispatch(search(searchText, 1))
-        history.replace(`/search?q=${encodeURIComponent(query)}`)
+        history.push(`/search?q=${encodeURIComponent(query)}`)
     }
 
     const selectRecentSearch = (query) => {
