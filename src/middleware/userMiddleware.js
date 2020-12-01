@@ -8,7 +8,8 @@ import {
 } from '../actions/userActions'
 
 let interval;
-const TOKEN_INVALIDATION_TIME = 1000 * 60 * 2;
+
+const TOKEN_INVALIDATION_TIME = 1000 * 60 * 15;
 
 const userMiddleware = ({dispatch, getState}) => next => action => {
     const result = next(action);

@@ -93,18 +93,16 @@ server.post('/auth/login', (req, res) => {
 
 server.post('/auth/refresh', (req, res) => {
   console.log("refresh endpoint called; request body:");
-  const {token} = req.body;
+  const {access_token} = req.body;
 
-  if (!token) {
+  if (!access_token) {
     const status = 401
     const message = 'Access token is invalid'
     res.status(status).json({status, message})
     return
   }
 
-  // delete payload.exp;
-  // const access_token = createToken(payload)
-  res.status(200).json({token})
+  res.status(200).json({access_token})
 })
 
 

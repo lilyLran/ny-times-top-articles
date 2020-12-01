@@ -1,19 +1,25 @@
 import React, {useEffect, useRef} from 'react'
-import { Pagination, Alert} from 'react-bootstrap';
+import { Pagination, Spinner} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
-import {Link} from "react-router-dom"
 import getPageInfo from '../util/pagination'
 import format from '../util/format'
 import {search} from '../actions/newsActions'
-import Spinner from './Spinner'
+// import Spinner from './Spinner'
 import useQuery from '../hooks/useQuery'
 import './Search.css'
 
 export default function Search() {
+    const prevQuery = useRef()
     const searchParams = useQuery();
     const query = searchParams.get('q')
     const dispatch = useDispatch()
     const searchState = useSelector((state) => {if (state.search.query=== query) { return state.search}})
+    useEffect(()=> {
+        if(query !== prevQuery.current) {
+            dispatch(search(query, 1))
+            prevQuery.current = query
+        }
+    }, [query, dispatch])
 
     if (!searchState || !searchState.result)  return null
 
@@ -22,17 +28,32 @@ export default function Search() {
     const {loading, error, list} =  result?.[currentPage] || {}
 
     if (error) {
-        return (<Alert variant='warning' className='center-vertical'>{error.message}</Alert>)
+        return (<div className='center-vertical'>{error.message}</div>)
     }
 
-    if (loading) return <Spinner />
+    if (loading) return (
+        <div className='center-vertical'>
+            <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+            </Spinner>
+        </div>
+    )
+
+    if(list && list.length === 0) {
+        return (
+            <div className='center-vertical'>
+                No matched content
+            </div>
+        )
+    }
 
     const onSearchPage = (page) => {
-        dispatch(search('test', page, searchState))
+        dispatch(search(query, page, searchState))
     }
     
     const getPagination = (pageInfo) => {
         const {hasPrev, hasNext, totalPage} = pageInfo
+
         return (
             <Pagination className='search-pagination' >
                 <Pagination.First onClick={()=>onSearchPage(1)}/>
@@ -65,7 +86,10 @@ export default function Search() {
                             </div>
                             <p className="card-text mb-auto">{item.abstract}</p>
                             {image && <img src={image.url} width={image.width} height={image.height} alt={image.caption || ''}/>}
-                            <Link target={"_blank"} to={item.web_url}>View Full Content</Link>
+                            <a target="_blank" href={item.web_url}  className="stretched-link">
+                                View Full Content
+                            </a>
+        
                         </div>
                     </div>
                 )

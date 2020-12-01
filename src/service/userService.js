@@ -28,11 +28,7 @@ export function register(email, password) {
 }
 
 export function refreshToken(access_token) {
-    return axios.post('/refresh', {
-        params: {
-            access_token
-        },
-        timeout: 20000,
+    return axios.post('/auth/refresh', {access_token}, {
         ...defaultConfig
     })
 }

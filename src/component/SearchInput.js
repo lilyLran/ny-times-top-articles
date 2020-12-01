@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {useHistory} from "react-router-dom"
-import {search} from '../actions/newsActions'
 import {FormControl, InputGroup, Button, OverlayTrigger, Popover, Row} from 'react-bootstrap';
 import  './SearchInput.css'
 
 export default function SearchInput() {
     const [query, setQuery] = useState('')
     const [show, setShow] = useState(false)
-    const dispatch = useDispatch()
     const history = useHistory()
     const recentSearches = useSelector((state) => state.search.recentSearches) || []
 
@@ -21,8 +19,7 @@ export default function SearchInput() {
     const onSearch = (text) => {
         const searchText = text || query
         if (!searchText) return;
-        dispatch(search(searchText, 1))
-        history.replace(`/search?q=${encodeURIComponent(query)}`)
+        history.push(`/search?q=${encodeURIComponent(searchText)}`)
     }
 
     const selectRecentSearch = (query) => {
@@ -35,6 +32,7 @@ export default function SearchInput() {
             setShow(true)
         }
     }
+    
     const searches = recentSearches.map(item => <Button 
             className="col-4 recent-search-button"
             onClick={() => selectRecentSearch(item)}

@@ -39,7 +39,8 @@ export default function SignInForm(){
         })
         .catch((error => {
             setSubmitting(false)
-            setError(error.message);
+            const message = typeof error === 'string' ? error : error.message
+            setError(message);
         }));
     };
     const submitText = submitting ? 'Loading' : isRegister ? 'Create Account' : 'Sign In'

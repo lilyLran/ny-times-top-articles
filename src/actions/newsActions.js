@@ -22,7 +22,6 @@ export function getCategorizedNews(category) {
             dispatch({type: GET_TOP_STORIES_START, sectionId, payload: {loading: true} });
             return service.getTopStories(sectionId).then(
                 response => {
-                    console.log('category', sectionId,  response)
                     dispatch({
                         type: GET_TOP_STORIES,
                         sectionId,
@@ -30,7 +29,6 @@ export function getCategorizedNews(category) {
                     })
                 },
                 error => {
-                    console.log('category', sectionId,  error)
                     dispatch({
                         type: GET_TOP_STORIES_FAILURE,
                         sectionId,

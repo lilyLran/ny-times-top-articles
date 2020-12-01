@@ -16,7 +16,15 @@ with local server using this repo -> https://github.com/techiediaries/fake-api-j
 - Spinner has also been implemented whenever we are making a network call.
 - Best coding practices has been used and proper modules are created for better readability.
 
+## Not implemented Functionalities
+- When clicking on an article, details must be shown plus the comments on that article
+  
+  I didn't implement the above feature because comment API always returns 'Invalid ApiKey for given resource'.
+  I tired to re-register a new account on https://developer.nytimes.com/, but it didn't help.
 
+  https://api.nytimes.com/svc/community/v3/user-content/url.json?url=https%3A%2F%2Fwww.nytimes.com%2F2020%2F11%2F30%2Fhealth%2Fcoronavirus-vaccines-treatments.html&api-key=194hd4oiqkFKdGyApSs4srbPWAcguOU0
+
+  {"fault":{"faultstring":"Invalid ApiKey for given resource","detail":{"errorcode":"oauth.v2.InvalidApiKeyForGivenResource"}}}
 ## Steps to run:
 Clone the repository on your local system and run `yarn` and `yarn server-auth`  to start the local server.
 The local server URL is http://localhost:8000/auth
@@ -31,8 +39,7 @@ You will also see any lint errors in the console.
 
 ### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Run `yarn test` to run the unit test cases. now, I have only written a example test case to test action creators, reducers and component. Will be adding more.
 
 ### `yarn test -- --coverage`
 - Run `npm test -- --coverage` to test the check the code coverage of the test cases written.

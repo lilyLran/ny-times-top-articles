@@ -10,16 +10,16 @@ const CategorizedNews = () => {
     const dispatch = useDispatch()
     category = category || 'home'
     const section = useSelector(state => state?.stories?.[category.toLowerCase()])
-    if (!section) {
+    if (!section || section.error) {
         dispatch(getCategorizedNews(category))
         return null
     }
     
     const {loading, error, results} = section
-    console.log('loading, error, results, category', loading, error, results, category)
-    if (error) return (<div className='center-vertical'>{error.message}</div>)
+
+    if (error) return (<div className='center-vertical container'>{error.message}</div>)
     if (loading) return (
-        <div className='center-vertical'>
+        <div className='center-vertical container'>
             <Spinner animation="border" role="status">
                 <span className="sr-only">Loading...</span>
             </Spinner>
